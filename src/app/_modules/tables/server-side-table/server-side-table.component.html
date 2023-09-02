@@ -1,1 +1,48 @@
-<p>server-side-table works!</p>
+<div class="spinner-container" *ngIf="dataSource.loading$ | async">
+  <mat-spinner></mat-spinner>
+</div>
+
+<mat-table class="lessons-table mat-elevation-z8" [dataSource]="dataSource"
+  matSort matSortActive="id" matSortDirection="asc" matSortDisableClear>
+
+  <div *ngFor="let column of columns">
+    <ng-container [matColumnDef]="column.id">
+      <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> {{column.name}} </mat-header-cell>
+      <mat-cell mat-cell *matCellDef="let user"> {{user[column.id]}} </mat-cell>
+    </ng-container>
+  </div>
+
+  <!--   
+  <div *ngFor="let column of columns">
+    <ng-container matColumnDef={{column.id}}>
+      <mat-header-cell mat-sort-header *matHeaderCellDef>{{column.id}}</mat-header-cell>
+      <mat-cell *matCellDef="let user">{{user.id}}</mat-cell>
+    </ng-container>
+  </div> -->
+  <!-- 
+  
+  <ng-container matColumnDef="id">
+      <mat-header-cell mat-sort-header *matHeaderCellDef>#</mat-header-cell>
+      <mat-cell *matCellDef="let user">{{user.id}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+      <mat-cell class="description-cell"
+                *matCellDef="let user">{{user.userName}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="email">
+      <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
+      <mat-cell class="duration-cell"
+                *matCellDef="let user">{{user.email}}</mat-cell>
+  </ng-container>
+   -->
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+</mat-table>
+
+<mat-paginator [length]="25" [pageSize]="3"
+  [pageSizeOptions]="[3, 5, 10]"></mat-paginator>
